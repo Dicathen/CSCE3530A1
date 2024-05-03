@@ -1,4 +1,4 @@
-#[allow(non_snake_case)]
+#![allow(non_snake_case)]
 use std::net;
 use std::time;
 
@@ -30,14 +30,15 @@ fn main() {
             }
         }
     }
+    //client branch
     else if args[1] == "client" {
         let port = args[2].parse::<u16>()
             .expect("Could not parse port number");
         let socket = init_client(port);
+        //set the read timeout to 2 seconds
         socket.set_read_timeout(Some(time::Duration::from_secs(2)))
             .expect("Could not set read timeout");
         let mut buf = [0; 256];
-        //send 10 PING messages to the server and wait for a pong message with a timeout of 5 seconds
         for i in 0..10 {
             std::thread::sleep(time::Duration::from_secs(1));
             print!("[Client] #{}, Sending PING ", i + 1);
